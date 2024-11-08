@@ -1,17 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upvote / Downvote</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Vote System</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <button onclick="window.location.href='/upvote'">⬆️</button>
-        <button onclick="window.location.href='/downvote'">⬇️</button>
-        <h2>Upvotes: {{ upvotes }}</h2>
-        <h2>Downvotes: {{ downvotes }}</h2>
+        <h1>Vote System</h1>
+        <div class="vote-buttons">
+            <button onclick="incrementUpvote()">⬆️</button>
+            <button onclick="incrementDownvote()">⬇️</button>
+        </div>
+        <div class="vote-count">
+            <h2>Upvotes: <span id="upvoteCount">0</span></h2>
+            <h2>Downvotes: <span id="downvoteCount">0</span></h2>
+        </div>
     </div>
+
+    <script>
+        let upvotes = 0;
+        let downvotes = 0;
+
+        function incrementUpvote() {
+            upvotes++;
+            document.getElementById("upvoteCount").textContent = upvotes;
+        }
+
+        function incrementDownvote() {
+            downvotes++;
+            document.getElementById("downvoteCount").textContent = downvotes;
+        }
+    </script>
 </body>
 </html>
