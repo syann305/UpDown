@@ -7,10 +7,18 @@
     <div class="container">
         <h1>Add muscle or lose weight?</h1>
         <div class="vote-buttons">
-            <button class="upvote" onclick="incrementUpvote()">⬆️</button>
-            <span id="upvoteCount">0</span>
-            <button class="downvote" onclick="incrementDownvote()">⬇️</button>
-            <span id="downvoteCount">0</span>
+            <button class="upvote" onclick="incrementUpvote()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+                    <path d="M12 4L4 12h16z"/>
+                </svg>
+            </button>
+            <span id="upvoteCount">0k</span>
+            <button class="downvote" onclick="incrementDownvote()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+                    <path d="M12 20L4 12h16z"/>
+                </svg>
+            </button>
+            <span id="downvoteCount">0k</span>
         </div>
     </div>
 
@@ -30,5 +38,4 @@
     </script>
 </body>
 </html>
-
 
