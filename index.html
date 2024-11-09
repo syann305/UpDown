@@ -7,12 +7,10 @@
     <div class="container">
         <h1>Add muscle or lose weight?</h1>
         <div class="vote-buttons">
-            <button onclick="incrementUpvote()">⬆️</button>
-            <button onclick="incrementDownvote()">⬇️</button>
-        </div>
-        <div class="vote-count">
-            <h2>Upvotes: <span id="upvoteCount">0</span></h2>
-            <h2>Downvotes: <span id="downvoteCount">0</span></h2>
+            <button class="upvote" onclick="incrementUpvote()">⬆️</button>
+            <span id="upvoteCount">0</span>
+            <button class="downvote" onclick="incrementDownvote()">⬇️</button>
+            <span id="downvoteCount">0</span>
         </div>
     </div>
 
@@ -22,14 +20,15 @@
 
         function incrementUpvote() {
             upvotes++;
-            document.getElementById("upvoteCount").textContent = upvotes;
+            document.getElementById("upvoteCount").textContent = upvotes + 'k';
         }
 
         function incrementDownvote() {
             downvotes++;
-            document.getElementById("downvoteCount").textContent = downvotes;
+            document.getElementById("downvoteCount").textContent = downvotes + 'k';
         }
     </script>
 </body>
 </html>
+
 
