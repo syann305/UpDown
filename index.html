@@ -1,102 +1,40 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple Voting System</title>
-    <style>
-        /* Full page height and center everything */
-        body, html {
-            height: 100%;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #f8f9fa;
-        }
-
-        /* Centering the vote-buttons section vertically and horizontally */
-        .vote-buttons {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 50px; /* Increased space between elements */
-        }
-
-        /* Button styling with extra large size */
-        button {
-            font-size: 150px; /* Much larger font size */
-            padding: 50px; /* Even larger padding for bigger touch targets */
-            cursor: pointer;
-            border: none;
-            background-color: #e0e0e0;
-            border-radius: 50%;
-            transition: transform 0.1s ease;
-            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Hover effect for the buttons */
-        button:hover {
-            transform: scale(1.1);
-            background-color: #d1d1d1;
-        }
-
-        /* Vote count in larger size */
-        #vote-count {
-            font-size: 100px;
-            font-weight: bold;
-            color: #333;
-        }
-
-        /* Responsive design for smaller screens */
-        @media (max-width: 600px) {
-            button {
-                font-size: 180px;  /* Much bigger for mobile */
-                padding: 70px;
-            }
-            #vote-count {
-                font-size: 120px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="vote-buttons">
-        <button id="upvote">⬆️</button>
-        <span id="vote-count">0</span>
-        <button id="downvote">⬇️</button>
+    <div class="container">
+        <h1>Add muscle or lose weight?</h1>
+        <div class="vote-buttons">
+            <button class="upvote" onclick="incrementUpvote()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+                    <path d="M12 4L4 12h16z"/>
+                </svg>
+            </button>
+            <span id="upvoteCount">0k</span>
+            <button class="downvote" onclick="incrementDownvote()">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
+                    <path d="M12 20L4 12h16z"/>
+                </svg>
+            </button>
+            <span id="downvoteCount">0k</span>
+        </div>
     </div>
 
     <script>
-        function updateVoteCount() {
-            fetch('/get_votes')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('vote-count').textContent = data.upvotes - data.downvotes;
-                });
+        let upvotes = 0;
+        let downvotes = 0;
+
+        function incrementUpvote() {
+            upvotes++;
+            document.getElementById("upvoteCount").textContent = upvotes + 'k';
         }
 
-        document.getElementById('upvote').addEventListener('click', () => {
-            fetch('/vote', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ type: 'upvote' })
-            }).then(updateVoteCount);
-        });
-
-        document.getElementById('downvote').addEventListener('click', () => {
-            fetch('/vote', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ type: 'downvote' })
-            }).then(updateVoteCount);
-        });
-
-        // Initial vote count display
-        updateVoteCount();
-
+        function incrementDownvote() {
+            downvotes++;
+            document.getElementById("downvoteCount").textContent = downvotes + 'k';
+        }
     </script>
 </body>
 </html>
