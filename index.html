@@ -1,41 +1,54 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <title>Simple Voting System</title>
+    <style>
+        .vote-buttons {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 20px;
+        }
+        button {
+            font-size: 24px;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Add muscle or lose weight?</h1>
-        <div class="vote-buttons">
-            <button class="upvote" onclick="incrementUpvote()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
-                    <path d="M12 4L4 12h16z"/>
-                </svg>
-            </button>
-            <span id="upvoteCount">0k</span>
-            <button class="downvote" onclick="incrementDownvote()">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
-                    <path d="M12 20L4 12h16z"/>
-                </svg>
-            </button>
-            <span id="downvoteCount">0k</span>
-        </div>
+    <div class="vote-buttons">
+        <button id="upvote">⬆️</button>
+        <span id="vote-count">0</span>
+        <button id="downvote">⬇️</button>
     </div>
 
     <script>
-        let upvotes = 0;
-        let downvotes = 0;
-
-        function incrementUpvote() {
-            upvotes++;
-            document.getElementById("upvoteCount").textContent = upvotes + 'k';
+        function updateVoteCount() {
+            fetch('/get_votes')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('vote-count').textContent = data.upvotes - data.downvotes;
+                });
         }
 
-        function incrementDownvote() {
-            downvotes++;
-            document.getElementById("downvoteCount").textContent = downvotes + 'k';
-        }
+        document.getElementById('upvote').addEventListener('click', () => {
+            fetch('/vote', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'upvote' })
+            }).then(updateVoteCount);
+        });
+
+        document.getElementById('downvote').addEventListener('click', () => {
+            fetch('/vote', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ type: 'downvote' })
+            }).then(updateVoteCount);
+        });
+
+        // Initial vote count display
+        updateVoteCount();
     </script>
 </body>
 </html>
-
