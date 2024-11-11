@@ -1,11 +1,21 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Muscle Model</title>
     <link rel="stylesheet" href="style.css">
+    <!-- Add model-viewer library -->
+    <script src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 </head>
 <body>
     <div class="container">
         <h1>Add muscle or lose weight?</h1>
+        
+        <!-- 3D Model Viewer -->
+        <model-viewer id="muscleModel" src="models/coolmuscle.glb" alt="3D Model" auto-rotate camera-controls>
+        </model-viewer>
+
         <div class="vote-buttons">
             <button class="upvote" onclick="incrementUpvote()">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="24px" height="24px">
@@ -26,14 +36,35 @@
         let upvotes = 0;
         let downvotes = 0;
 
+        // Increment upvotes
         function incrementUpvote() {
             upvotes++;
             document.getElementById("upvoteCount").textContent = upvotes + 'k';
+            updateModel();
         }
 
+        // Increment downvotes
         function incrementDownvote() {
             downvotes++;
             document.getElementById("downvoteCount").textContent = downvotes + 'k';
+            updateModel();
+        }
+
+        // Update model based on votes
+        function updateModel() {
+            const modelViewer = document.getElementById("muscleModel");
+
+            // Calculate the scaling factor based on the difference between upvotes and downvotes
+            const totalVotes = upvotes + downvotes;
+            const voteDifference = upvotes - downvotes;
+            const scaleFactor = 1 + voteDifference * 0.05; // Adjust scale sensitivity here
+
+            // Update the scale of the model
+            modelViewer.style.transform = `scale(${scaleFactor}, ${scaleFactor}, ${scaleFactor})`;
+
+            // Optionally, change the brightness based on the upvote percentage
+            const brightness = Math.min(2, Math.max(0.5, upvotes / (totalVotes || 1) + 0.5));
+            modelViewer.style.filter = `brightness(${brightness})`;
         }
     </script>
 </body>
